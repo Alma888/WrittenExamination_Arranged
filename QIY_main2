@@ -1,0 +1,95 @@
+# WrittenExamination_Arranged
+
+package QIY;
+
+//判断路径是否相交
+/*
+题目描述：
+给你一个字符串 path，其中 path[i] 的值可以是 'N'、'S'、'E' 或者 'W'，分别表示向北、向南、
+向东、向西移动一个单位。机器人从二维平面上的原点 (0, 0) 处开始出发，按 path 所指示的路径行走。
+如果路径在任何位置上出现相交的情况，也就是走到之前已经走过的位置，请返回 True ；
+否则，返回 False 。
+
+输入描述：
+一个字符串 path，其中 path[i] 的值可以是 'N'、'S'、'E' 或者 'W'，分别表示向北、向南、
+向东、向西移动一个单位。
+输出描述：
+如果路径在任何位置上出现相交的情况，也就是走到之前已经走过的位置，请返回 True ；
+否则，返回 False 。
+
+样例输入：ESSWNEE
+样例输出：True
+ */
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+//方法1：时间复杂度和空间复杂度均为O(n)
+public class Main2 {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        Set<String> set=new HashSet<>();
+        int x=0;//横坐标
+        int y=0;//纵坐标
+        set.add((x+","+y));
+        int i=0;
+        for(i=0;i<s.length();i++) {
+            char c = s.charAt(i);
+            if (c == 'N') {
+                y++;
+            } else if (c == 'S') {
+                y--;
+            } else if (c == 'E') {
+                x++;
+            } else if (c == 'W') {
+                x--;
+            }
+            if (!set.add((x + "," + y))) {
+                System.out.println("True");
+                break;
+            }
+        }
+        if(i==s.length()){
+            System.out.println("False");
+        }
+    }
+}
+
+//方法2：假设 path 的长度为 n.
+//
+//时间复杂度：O(n)。最坏情况下，对于 n 个元素，每个元素做一次 O(1)的哈希表查询和一次 O(1) 的哈希表
+//空间复杂度：O(n)。这里使用了哈希表作为辅助空间，故空间代价是 O(n)。
+
+/*
+class Solution {
+    public boolean isPathCrossing(String path) {
+        Set<Integer> vis = new HashSet<Integer>();
+
+        int x = 0, y = 0;
+        vis.add(getHash(x, y));
+
+        int length = path.length();
+        for (int i = 0; i < length; i++) {
+            char dir = path.charAt(i);
+            switch (dir) {
+                case 'N': --x; break;
+                case 'S': ++x; break;
+                case 'W': --y; break;
+                case 'E': ++y; break;
+            }
+            int hashValue = getHash(x, y);
+            if (!vis.add(hashValue)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int getHash(int x, int y) {
+        return x * 20001 + y;
+    }
+}
+
+ */
